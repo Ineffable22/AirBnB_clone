@@ -25,7 +25,7 @@ class FileStorage:
         all():
             Returns the list of stored objects
         new(obj):
-            Add a new object to __objects(class attribute0)
+            Add a new object to __objects(class attribute)
         save():
             Stores the object dictionary in a file
         reload():
