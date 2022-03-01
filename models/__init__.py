@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" module
+""" Define the parent directory as a package for the python interpreter
 """
 from models.engine.file_storage import FileStorage
 
