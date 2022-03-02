@@ -7,6 +7,13 @@
     FileStorage
 """
 import json
+from models.base_model import BaseModel
+from models.user import User
+
+cls_dict = {
+    "BaseModel": BaseModel,
+    "User": User
+}
 
 
 class FileStorage:
@@ -53,13 +60,16 @@ class FileStorage:
                 Object to add in the __objects class attribute
         """
         key = format(type(obj).__name__ + "." + obj.id)
-        self.__objects[key] = obj.to_dict()
+        self.__objects[key] = obj
 
     def save(self):
         """ Stores the object dictionary in a file
         """
+        dict_to_save = self.__objects.copy()
+        for key, value in dict_to_save.items():
+            dict_to_save[key] = value.to_dict()
         with open(self.__file_path, "w") as file:
-            file.write(json.dumps(self.__objects))
+            file.write(json.dumps(dict_to_save))
 
     def reload(self):
         """ load objects saved in a file
@@ -67,5 +77,7 @@ class FileStorage:
         try:
             with open(self.__file_path, "r") as file:
                 self.__objects = json.loads(file.read())
+                for key, value in self.__objects.items():
+                    self.__objects[key] = cls_dict[value["__class__"]](**value)
         except Exception:
             pass
