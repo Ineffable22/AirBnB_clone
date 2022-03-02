@@ -12,7 +12,12 @@ import pwd
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 from models import storage
+from models.user import User
 
+cls_dict = {
+    "BaseModel": BaseModel,
+    "User": User
+}
 
 class HBNBCommand(cmd.Cmd):
     """ Allow instances of objects that inherit from Cmd
@@ -31,10 +36,10 @@ class HBNBCommand(cmd.Cmd):
         """
         if line == "":
             print("** class name missing **")
-        elif line != "BaseModel":
+        elif line not in cls_dict.keys():
             print("** class doesn't exist **")
         else:
-            obj = BaseModel()
+            obj = cls_dict[line]()
             storage.save()
             print(obj.id)
 
@@ -48,7 +53,7 @@ class HBNBCommand(cmd.Cmd):
         id = parts[1] if len(parts) > 1 else None
         if cls_name is None:
             print("** class name missing **")
-        elif cls_name != "BaseModel":
+        elif cls_name not in cls_dict.keys():
             print("** class doesn't exist **")
         elif id is None:
             print("** instance id missing ** ")
@@ -66,7 +71,7 @@ class HBNBCommand(cmd.Cmd):
         id = parts[1] if len(parts) > 1 else None
         if cls_name is None:
             print("** class name missing **")
-        elif cls_name != "BaseModel":
+        elif cls_name not in cls_dict.keys():
             print("** class doesn't exist **")
         elif id is None:
             print("** instance id missing ** ")
@@ -87,7 +92,7 @@ class HBNBCommand(cmd.Cmd):
         value = parts[3] if len(parts) > 3 else None
         if cls_name is None:
             print("** class name missing **")
-        elif cls_name != "BaseModel":
+        elif cls_name not in cls_dict.keys():
             print("** class doesn't exist **")
         elif id is None:
             print("** instance id missing ** ")
@@ -106,12 +111,12 @@ class HBNBCommand(cmd.Cmd):
         Prints all string representation of all instances
         based or not on the class name
         """
-        if line != "" and line != "BaseModel":
+        if line != "" and line not in cls_dict.keys():
             print("** class doesn't exist **")
         else:
             my_dict = storage.all()
             for key in list(my_dict.keys()):
-                print(BaseModel(**my_dict[key]))
+                print(cls_dict[line](**my_dict[key]))
 
     def do_EOF(self, line):
         """\033[38;2;132;255;161m
