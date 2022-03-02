@@ -34,6 +34,10 @@ class HBNBCommand(cmd.Cmd, FileStorage):
             print(obj.id)
 
     def do_show(self, line):
+        """
+        Prints the string representation of an instance
+        based on the class name and id
+        """
         parts = line.split()
         cls_name = parts[0] if len(parts) > 0 else None
         id = parts[1] if len(parts) > 1 else None
