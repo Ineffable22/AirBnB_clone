@@ -68,6 +68,30 @@ class HBNBCommand(cmd.Cmd, FileStorage):
         else:
             del storage.all()[cls_name + "." + id]
 
+    def do_update(self, line):
+        """
+        Updates an instance based on the class name and id by adding or updating attribute
+        """
+        parts = line.split()
+        cls_name = parts[0] if len(parts) > 0 else None
+        id = parts[1] if len(parts) > 1 else None
+        attribute = parts[2] if len(parts) > 2 else None
+        value = parts[3] if len(parts) > 3 else None
+        if cls_name is None:
+            print("** class name missing **")
+        elif cls_name != "BaseModel":
+            print("** class doesn't exist **")
+        elif id is None:
+            print("** instance id missing ** ")
+        elif (cls_name + "." + id) not in list(storage.all().keys()):
+            print("** no instance found **")
+        elif attribute is None:
+            print("** attribute name missing **")
+        elif value is None:
+            print("** value missing **")
+        else:
+            storage.new(cls_name + "." + str(attribute), value)
+        
     # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     def do_EOF(self, line):
