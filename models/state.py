@@ -1,8 +1,8 @@
 #!/usr/bin/python3
-""" STATE Class """
+""" State Class """
 from models.base_model import BaseModel
 
 
 class State(BaseModel):
-    """ State Class """
+    """ Public class attributes """
     name = ""
