@@ -34,7 +34,7 @@ class BaseModel:
     """
     def __init__(self, *args, **kwargs):
         """ Constructor method to initialize attribute of an instance.
-            If argument kwargs is not empty, the /key/values are added to
+            If argument kwargs is not empty, the key/values are added to
             the instance. Otherwise, create new instance.
 
             Parameters
