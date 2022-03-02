@@ -6,7 +6,7 @@
 """
 import uuid
 from datetime import datetime
-from models import storage
+import models
 
 
 class BaseModel:
@@ -34,7 +34,7 @@ class BaseModel:
     """
     def __init__(self, *args, **kwargs):
         """ Constructor method to initialize attribute of an instance.
-            If argument kwargs is not empty, the /key/values are added to
+            If argument kwargs is not empty, the key/values are added to
             the instance. Otherwise, create new instance.
 
             Parameters
@@ -54,13 +54,13 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = self.created_at
-            storage.new(self)
+            models.storage.new(self)
 
     def save(self):
         """ Stores the modifcation date and time of the object.
         """
         self.updated_at = datetime.now()
-        storage.save()
+        models.storage.save()
 
     def to_dict(self):
         """ Returns a dictionary containing all key/values of the instance.
