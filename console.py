@@ -1,6 +1,10 @@
 #!/usr/bin/python3
-""" Module
-        pass
+""" User this module for instance shell simulator objects
+    (HBNB console)
+
+    Classes
+    -------
+    HBNBCommand
 """
 import cmd
 import os
@@ -10,9 +14,9 @@ from models.engine.file_storage import FileStorage
 from models import storage
 
 
-class HBNBCommand(cmd.Cmd, FileStorage):
-    """ Class definition
-            pass
+class HBNBCommand(cmd.Cmd):
+    """ Allow instances of objects that inherit from Cmd
+        in the cmd module and run a shell
     """
     intro = ("\033[38;2;245;97;166m*" * 25) +\
         "\n* Welcome {}\n".format(pwd.getpwuid(os.getuid()).pw_name) +\
@@ -54,7 +58,7 @@ class HBNBCommand(cmd.Cmd, FileStorage):
             print(storage.all()[cls_name + "." + id])
 
     def do_destroy(self, line):
-        """ \033[38;2;132;255;161m
+        """\033[38;2;132;255;161m
         Deletes an instance based on the class name and id
         """
         parts = line.split()
