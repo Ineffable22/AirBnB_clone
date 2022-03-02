@@ -9,15 +9,10 @@
 import cmd
 import os
 import pwd
-from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 from models import storage
-from models.user import User
+from models import cls_dict
 
-cls_dict = {
-    "BaseModel": BaseModel,
-    "User": User
-}
 
 class HBNBCommand(cmd.Cmd):
     """ Allow instances of objects that inherit from Cmd
@@ -32,7 +27,7 @@ class HBNBCommand(cmd.Cmd):
         """\033[38;2;132;255;161m
         Creates a new instance of BaseModel and storage in JSON file
         Usage:
-        (hbnb) create BaseModel // stdout: id of the instance
+        (hbnb) create <classname> // stdout: id of the instance
         """
         if line == "":
             print("** class name missing **")
@@ -47,6 +42,8 @@ class HBNBCommand(cmd.Cmd):
         """\033[38;2;132;255;161m
         Prints the string representation of an instance
         based on the class name and id
+        Usage:
+        (hbnb) show <classname> <id>
         """
         parts = line.split()
         cls_name = parts[0] if len(parts) > 0 else None
@@ -65,6 +62,8 @@ class HBNBCommand(cmd.Cmd):
     def do_destroy(self, line):
         """\033[38;2;132;255;161m
         Deletes an instance based on the class name and id
+        Usage:
+        (hbnb) destroy <classname> <id>
         """
         parts = line.split()
         cls_name = parts[0] if len(parts) > 0 else None
@@ -84,6 +83,8 @@ class HBNBCommand(cmd.Cmd):
         """\033[38;2;132;255;161m
         Updates an instance based on the class name and id by adding
         or updating attribute
+        Usage:
+        (hbnb) update <classname> <id> <attribute name> "<attribute value>"
         """
         parts = line.split()
         cls_name = parts[0] if len(parts) > 0 else None
@@ -103,20 +104,23 @@ class HBNBCommand(cmd.Cmd):
         elif value is None:
             print("** value missing **")
         else:
-            storage.all()[cls_name + "." + id][attribute] = value
+            setattr(storage.all()[cls_name + "." + id], attribute, value)
             storage.save()
 
     def do_all(self, line):
         """\033[38;2;132;255;161m
         Prints all string representation of all instances
         based or not on the class name
+        Usage:
+        (hbnb) all
+        (hbnb) all <classname>
         """
         if line != "" and line not in cls_dict.keys():
             print("** class doesn't exist **")
         else:
             my_dict = storage.all()
-            for key in list(my_dict.keys()):
-                print(cls_dict[line](**my_dict[key]))
+            for value in my_dict.values():
+                print(value)
 
     def do_EOF(self, line):
         """\033[38;2;132;255;161m
@@ -139,10 +143,9 @@ class HBNBCommand(cmd.Cmd):
         """\033[38;2;132;255;161m
         Help for commands
         Usage:
-        (hbnb)$ help // List available commands
-        (hbnb)$ help 'cmd' // Detailed help on the command(cmd)
+        (hbnb) help // List available commands
+        (hbnb) help <command> // Detailed help on the command(cmd)
         """
-        # 'Listavailablecommands with "help" or detailed help with "help cmd"'
         cmd.Cmd.do_help(self, arg)
 
     def emptyline(self):
