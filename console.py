@@ -72,8 +72,9 @@ class HBNBCommand(cmd.Cmd, FileStorage):
             del storage.all()[cls_name + "." + id]
 
     def do_update(self, line):
-        """
-        Updates an instance based on the class name and id by adding or updating attribute
+        """\033[38;2;132;255;161m
+        Updates an instance based on the class name and id by adding
+        or updating attribute
         """
         parts = line.split()
         cls_name = parts[0] if len(parts) > 0 else None
@@ -93,8 +94,9 @@ class HBNBCommand(cmd.Cmd, FileStorage):
         elif value is None:
             print("** value missing **")
         else:
-            storage.new(cls_name + "." + str(attribute), value)
-        
+            storage.all()[cls_name + "." + id][attribute] = value
+            storage.save()
+
     def do_all(self, line):
         """\033[38;2;132;255;161m
         Prints all string representation of all instances
