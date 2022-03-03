@@ -132,7 +132,6 @@ class HBNBCommand(cmd.Cmd):
         """ method
         """
         parts = list(filter(lambda x: x != '', line.split(".")))
-        print(parts)
         if len(parts) > 1:
             cls_name = parts[0]
             method = (parts[1].split("("))[0]
@@ -142,8 +141,6 @@ class HBNBCommand(cmd.Cmd):
                 method = "d" + method
             else:
                 params = (((parts[1].split("("))[1])[:-1]).replace(",", "")
-
-            print(cls_name, method, params)
             line = "{} {} {}".format(method, cls_name, params)
         return line
 
@@ -152,7 +149,6 @@ class HBNBCommand(cmd.Cmd):
         """
         parts = line.split(" ", 2)
         parts[2] = ast.literal_eval(parts[2])
-        print(parts)
         for key, value in parts[2].items():
             setattr(storage.all()[parts[0] + "." + parts[1]], key, value)
         storage.save()
