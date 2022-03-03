@@ -117,38 +117,16 @@ class HBNBCommand(cmd.Cmd):
         """
         parts = line.split()
         cls_name = parts[0] if len(parts) > 0 else None
-        if cls_name != None and cls_name not in cls_dict.keys():
+        if cls_name is not None and cls_name not in cls_dict.keys():
             print("** class doesn't exist **")
-        elif cls_name:
-            """
-            my_dict = storage.all()
-            for value in my_dict.values():
-            print(value)
-            """
-            flag = 0
-            my_dict = storage.all()
-            print('["', end="")
-            for key in my_dict.keys():
-                value = key.split('.')
-                if value[0] == cls_name:
-                    if flag == 1:
-                        print('", "', end="")
-                    obj = my_dict[key]
-                    print(obj, end="")
-                    flag = 1
-            print('"]')
         else:
-            flag = 0
-            my_dict = storage.all()
-            print('["', end="")
-            for key in my_dict.keys():
-                if flag == 1:
-                    print('", "', end="")
-                obj = my_dict[key]
-                print(obj, end="")
-                flag = 1
-            print('"]')
-            
+            if cls_name is None:
+                print([str(elm) for elm in storage.all().values()])
+            else:
+                print([
+                    str(elm) for elm in storage.all().values()
+                    if elm.__class__.__name__ == cls_name
+                ])
 
     def do_EOF(self, line):
         """\033[38;2;132;255;161m
