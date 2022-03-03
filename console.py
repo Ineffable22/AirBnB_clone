@@ -128,6 +128,28 @@ class HBNBCommand(cmd.Cmd):
                     if elm.__class__.__name__ == cls_name
                 ])
 
+    def precmd(self, line):
+        """
+        """
+        parts = list(filter(lambda x: x != '', line.split(".")))
+        print(parts)
+        if len(parts) > 1:
+            cls_name = parts[0]
+            method = (parts[1].split("("))[0]
+            params = (((parts[1].split("("))[1])[:-1]).replace(",", "")
+            print(cls_name, method, params)
+            line = "{} {} {}".format(method, cls_name, params)
+        return line
+
+    def do_count(self, line):
+        """
+        """
+        count = 0
+        for value in storage.all().values():
+            if value.__class__.__name__ == line:
+                count += 1
+        print(count)
+
     def do_EOF(self, line):
         """\033[38;2;132;255;161m
         Terminates the running program
