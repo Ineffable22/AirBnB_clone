@@ -118,9 +118,13 @@ class HBNBCommand(cmd.Cmd):
         if line != "" and line not in cls_dict.keys():
             print("** class doesn't exist **")
         else:
+            """
             my_dict = storage.all()
             for value in my_dict.values():
                 print(value)
+            """
+            my_dict = storage.all()
+            print([str(elm) for elm in my_dict.values()])
 
     def do_EOF(self, line):
         """\033[38;2;132;255;161m
