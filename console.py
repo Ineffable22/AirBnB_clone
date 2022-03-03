@@ -9,7 +9,7 @@
 import cmd
 import os
 import pwd
-from models.engine.file_storage import FileStorage
+import ast
 from models import storage
 from models import cls_dict
 
@@ -79,7 +79,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             del storage.all()[cls_name + "." + id]
 
-    def do_update(self, line):
+    def do_update(self, line):  # Refactor
         """\033[38;2;132;255;161m
         Updates an instance based on the class name and id by adding
         or updating attribute
@@ -128,18 +128,34 @@ class HBNBCommand(cmd.Cmd):
                     if elm.__class__.__name__ == cls_name
                 ])
 
-    def precmd(self, line):
-        """
+    def precmd(self, line):  # Refactor
+        """ method
         """
         parts = list(filter(lambda x: x != '', line.split(".")))
         print(parts)
         if len(parts) > 1:
             cls_name = parts[0]
             method = (parts[1].split("("))[0]
-            params = (((parts[1].split("("))[1])[:-1]).replace(",", "")
+            params = ((parts[1].split("("))[1])[:-1]
+            if method == "update" and "{" in params:
+                params = params.replace(",", "", 1)
+                method = "d" + method
+            else:
+                params = (((parts[1].split("("))[1])[:-1]).replace(",", "")
+
             print(cls_name, method, params)
             line = "{} {} {}".format(method, cls_name, params)
         return line
+
+    def do_dupdate(self, line):  # Refactor
+        """ pass
+        """
+        parts = line.split(" ", 2)
+        parts[2] = ast.literal_eval(parts[2])
+        print(parts)
+        for key, value in parts[2].items():
+            setattr(storage.all()[parts[0] + "." + parts[1]], key, value)
+        storage.save()
 
     def do_count(self, line):
         """
