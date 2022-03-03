@@ -15,9 +15,27 @@
 
 ## Format Specifiers
 
+### Classes
+<li>BaseModel</li>
+<li>FileStorage</li>
+<li>State</li>
+<li>City</li>
+<li>Amenity </li>
+<li>Place</li>
+<li>Review</li>
 
+### Commands
 
-### Value Return 
+| cmd   | Description | Usage |
+|--------|--------|--------|
+| **`help`**   | Displays help manual and usage of command specified | `help` `<command>` <br> `Empty`|
+| **`quit`**   | Exit the program | `quit` |
+| **`EOF`**    | Exit the program | `EOF` <br>`Ctrl + D`|
+| **`create`** | Creates new id for a new class | `create <class name>` |
+| **`show`**   |  Prints the string representation of an instance based on the class name  | `show <class name> id`|
+| **`destroy`**| Deletes an instance based on the class name and id | `destroy <class name> id`|
+| **`all`**    | Prints all string representation of all instances based or not on the class name | `all` <br> `all <class name>`|
+| **`update`** | Updates an instance based on the class name and id by adding or updating attribute | `update <class name> <id> <attribute> <value>` |
 
 ## Examples
 `Create User`
