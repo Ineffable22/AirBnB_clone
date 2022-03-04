@@ -48,7 +48,7 @@ EOF  help  quit
 (hbnb) quit
 $
  ```
-`No Interactive Mode`
+`Non-Interactive Mode`
 ```python3
 $ echo "help" | ./console.py
 (hbnb)
