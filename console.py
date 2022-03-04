@@ -9,7 +9,8 @@
 import cmd
 import os
 import pwd
-import ast # For to use literal_eval method to convert from string to dict
+import ast  # For to use literal_eval method to convert from string to dict
+import re
 from models import storage
 from models import cls_dict
 
@@ -88,9 +89,9 @@ class HBNBCommand(cmd.Cmd):
         """
         parts = line.split()
         cls_name = parts[0] if len(parts) > 0 else None
-        id = parts[1].replace("\"","") if len(parts) > 1 else None
-        attribute = parts[2].replace("\"","") if len(parts) > 2 else None
-        value = parts[3].replace("\"","") if len(parts) > 3 else None
+        id = parts[1].replace("\"", "") if len(parts) > 1 else None
+        attribute = parts[2].replace("\"",  "") if len(parts) > 2 else None
+        value = parts[3].replace("\"", "") if len(parts) > 3 else None
 
         if cls_name is None:
             print("** class name missing **")
@@ -132,6 +133,23 @@ class HBNBCommand(cmd.Cmd):
     def precmd(self, line):  # Refactor
         """ method
         """
+        "forma(line) -> text.text(params)"
+        if re.search('^[A-Z].*\\..*\\(.*\\)$', line):
+            print("We ahve match bro :3")
+            parts = (re.split("[.()]", line))[:-1]
+            params = parts[2]
+            print("params =>", params)
+            if parts[1] == "update":
+                if re.search("[\\{\\}]", params[2]):
+                    params = re.split(",", params, 1)
+                else:
+
+                    params = re.split(",", params, 2)
+            params[0] = params[0].replace("\"", "")
+            print("params =>", params)
+            line = "{} {} {}".format(parts[1], parts[0], parts[2])
+            print("=>", line)
+        """
         parts = list(filter(lambda x: x != '', line.split(".")))
         if len(parts) > 1:
             cls_name = parts[0]
@@ -145,6 +163,7 @@ class HBNBCommand(cmd.Cmd):
                 if method in ["show", "destroy"]:
                     params = params[1:-1]
             line = "{} {} {}".format(method, cls_name, params)
+        """
         return line
 
     def do_dupdate(self, line):  # Refactor
@@ -152,7 +171,7 @@ class HBNBCommand(cmd.Cmd):
         """
         parts = line.split(" ", 2)
         cls_name = parts[0] if len(parts) > 0 else None
-        id = parts[1].replace("\"","") if len(parts) > 1 else None
+        id = parts[1].replace("\"", "") if len(parts) > 1 else None
         my_dict = ast.literal_eval(parts[2]) if len(parts) > 2 else None
 
         if cls_name is None:
