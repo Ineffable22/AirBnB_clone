@@ -9,7 +9,7 @@
 import cmd
 import os
 import pwd
-import ast
+import ast # For to use literal_eval method to convert from string to dict
 from models import storage
 from models import cls_dict
 
