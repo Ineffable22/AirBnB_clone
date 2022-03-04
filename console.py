@@ -89,9 +89,9 @@ class HBNBCommand(cmd.Cmd):
         """
         parts = line.split()
         cls_name = parts[0] if len(parts) > 0 else None
-        id = parts[1].replace("\"", "") if len(parts) > 1 else None
-        attribute = parts[2].replace("\"",  "") if len(parts) > 2 else None
-        value = parts[3].replace("\"", "") if len(parts) > 3 else None
+        id = parts[1] if len(parts) > 1 else None
+        attribute = parts[2] if len(parts) > 2 else None
+        value = parts[3] if len(parts) > 3 else None
 
         if cls_name is None:
             print("** class name missing **")
@@ -130,40 +130,29 @@ class HBNBCommand(cmd.Cmd):
                     if elm.__class__.__name__ == cls_name
                 ])
 
-    def precmd(self, line):  # Refactor
-        """ method
+    def precmd(self, line):
+        """ Format user input before executing the command, to direct them
+            to already existing commands
+            Parameter
+            ---------
+            line : str
+                Input of the user from the console
         """
-        "forma(line) -> text.text(params)"
         if re.search('^[A-Z].*\\..*\\(.*\\)$', line):
-            print("We ahve match bro :3")
             parts = (re.split("[.()]", line))[:-1]
             params = parts[2]
-            print("params =>", params)
             if parts[1] == "update":
-                if re.search("[\\{\\}]", params[2]):
-                    params = re.split(",", params, 1)
+                if re.search("[\\{\\}]", params):
+                    parts[1] = "d" + parts[1]
+                    params = re.split(", ", params, 1)
                 else:
-
-                    params = re.split(",", params, 2)
-            params[0] = params[0].replace("\"", "")
-            print("params =>", params)
-            line = "{} {} {}".format(parts[1], parts[0], parts[2])
-            print("=>", line)
-        """
-        parts = list(filter(lambda x: x != '', line.split(".")))
-        if len(parts) > 1:
-            cls_name = parts[0]
-            method = (parts[1].split("("))[0]
-            params = ((parts[1].split("("))[1])[:-1]
-            if method == "update" and "{" in params:
-                params = params.replace(",", "", 1)
-                method = "d" + method
-            else:
-                params = (((parts[1].split("("))[1])[:-1]).replace(",", "")
-                if method in ["show", "destroy"]:
-                    params = params[1:-1]
-            line = "{} {} {}".format(method, cls_name, params)
-        """
+                    params = re.split(", ", params, 2)
+                if (parts[1] != "dupdate"):
+                    params = list(map(lambda e: e.replace("\"", ""), params))
+                params = " ".join(params)
+            elif parts[1] != "all" and parts[1] != "count":
+                params = params.replace("\"", "")
+            line = "{} {} {}".format(parts[1], parts[0], params)
         return line
 
     def do_dupdate(self, line):  # Refactor
@@ -190,13 +179,22 @@ class HBNBCommand(cmd.Cmd):
             storage.save()
 
     def do_count(self, line):
+        """\033[38;2;132;255;161m
+        Shows the number of instances por class
+        Usage:
+        (hbnb) <classname>.count()
+        (hbnb) count <classname>
         """
-        """
-        count = 0
-        for value in storage.all().values():
-            if value.__class__.__name__ == line:
-                count += 1
-        print(count)
+        parts = line.split()
+        if (len(parts) != 1):
+            cmd.Cmd.do_help(self, "count")
+        else:
+            count = 0
+            cls_name = parts[0]
+            for value in storage.all().values():
+                if value.__class__.__name__ == cls_name:
+                    count += 1
+            print(count)
 
     def do_EOF(self, line):
         """\033[38;2;132;255;161m
