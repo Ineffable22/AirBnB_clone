@@ -10,11 +10,11 @@
 2. Miguel Barrera
 
 ## Description
-<h3>
+<p>
 This project is the first step of the AirBnB project, which is an AirBnB clone that includes design, layout, infrastructure and database.
 
 It consists of the implementation of a command line interface in the PYTHON programming language, which simulates the interaction with a RESTful API and data persistence. As well as basic functions such as create, show, update, destroy that simulate a CRUD (Create, Read, Update, Delete) of a lifetime towards a database.
-</h3>
+</p>
 
 ## Representation
 
@@ -71,9 +71,8 @@ EOF  help  quit
 $
 ```
 
-<h1 align="center">Classes</h1>
-<p align="center"><img src="https://raw.githubusercontent.com/Ineffable22/AirBnB_clone/main/classes.png" width="700"></p>
-
+<h1>Classes</h1>
+<p align="center"><img src="https://user-images.githubusercontent.com/82726832/156699714-53df4235-7e62-4bb2-ab35-ca018f2b11fc.png" width="100%"></p>
 <br>
 
 
@@ -101,12 +100,12 @@ $
 (hbnb) User.update("633dd39d-1614-41b0-8e1e-eb8472cacea3", {'first_name': "Miguel", "age": 22})
 ```
 `Show <class name>`
-```
+```python3
 (hbnb) User.show("633dd39d-1614-41b0-8e1e-eb8472cacea3")
 [User] (633dd39d-1614-41b0-8e1e-eb8472cacea3) {'id': '633dd39d-1614-41b0-8e1e-eb8472cacea3', 'created_at': datetime.datetime(2022, 3, 3, 14, 20, 32, 70949), 'updated_at': datetime.datetime(2022, 3, 3, 14, 20, 32, 70949), 'first_name': 'Miguel', 'age': 22}
 ```
 `Command help`
-```c
+```python3
 (hbnb) help
 Documented commands (type help <topic>):
 ========================================
