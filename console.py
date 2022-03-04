@@ -30,12 +30,9 @@ class HBNBCommand(cmd.Cmd):
         Usage:
         (hbnb) create <classname> // stdout: id of the instance
         """
-        if line == "":
-            print("** class name missing **")
-        elif line not in cls_dict.keys():
-            print("** class doesn't exist **")
-        else:
-            obj = cls_dict[line]()
+        parts = line.split()
+        if self.check_conditions(parts, 1):
+            obj = cls_dict[parts[0]]()
             storage.save()
             print(obj.id)
 
@@ -47,18 +44,8 @@ class HBNBCommand(cmd.Cmd):
         (hbnb) show <classname> <id>
         """
         parts = line.split()
-        cls_name = parts[0] if len(parts) > 0 else None
-        id = parts[1] if len(parts) > 1 else None
-        if cls_name is None:
-            print("** class name missing **")
-        elif cls_name not in cls_dict.keys():
-            print("** class doesn't exist **")
-        elif id is None:
-            print("** instance id missing ** ")
-        elif (cls_name + "." + id) not in list(storage.all().keys()):
-            print("** no instance found **")
-        else:
-            print(storage.all()[cls_name + "." + id])
+        if self.check_conditions(parts, 2):
+            print(storage.all()[parts[0] + "." + parts[1]])
 
     def do_destroy(self, line):
         """\033[38;2;132;255;161m
@@ -67,18 +54,8 @@ class HBNBCommand(cmd.Cmd):
         (hbnb) destroy <classname> <id>
         """
         parts = line.split()
-        cls_name = parts[0] if len(parts) > 0 else None
-        id = parts[1] if len(parts) > 1 else None
-        if cls_name is None:
-            print("** class name missing **")
-        elif cls_name not in cls_dict.keys():
-            print("** class doesn't exist **")
-        elif id is None:
-            print("** instance id missing ** ")
-        elif (cls_name + "." + id) not in list(storage.all().keys()):
-            print("** no instance found **")
-        else:
-            del storage.all()[cls_name + "." + id]
+        if self.check_conditions(parts, 2):
+            del storage.all()[parts[0] + "." + parts[1]]
 
     def do_update(self, line):  # Refactor
         """\033[38;2;132;255;161m
@@ -88,25 +65,12 @@ class HBNBCommand(cmd.Cmd):
         (hbnb) update <classname> <id> <attribute name> "<attribute value>"
         """
         parts = line.split()
-        cls_name = parts[0] if len(parts) > 0 else None
-        id = parts[1] if len(parts) > 1 else None
-        attribute = parts[2] if len(parts) > 2 else None
-        value = parts[3] if len(parts) > 3 else None
-
-        if cls_name is None:
-            print("** class name missing **")
-        elif cls_name not in cls_dict.keys():
-            print("** class doesn't exist **")
-        elif id is None:
-            print("** instance id missing ** ")
-        elif (cls_name + "." + id) not in list(storage.all().keys()):
-            print("** no instance found **")
-        elif attribute is None:
-            print("** attribute name missing **")
-        elif value is None:
-            print("** value missing **")
-        else:
-            setattr(storage.all()[cls_name + "." + id], attribute, value)
+        if self.check_conditions(parts, 4):
+            setattr(
+                storage.all()[parts[0] + "." + parts[1]],  # object
+                parts[2],  # attribute
+                parts[3]  # value
+            )
             storage.save()
 
     def do_all(self, line):
@@ -227,6 +191,48 @@ class HBNBCommand(cmd.Cmd):
         Ignore empty lines
         """
         pass
+
+    def check_conditions(self, parts, count):
+        """
+        Validates if the parameters required for the operation
+        of the executing command were passed
+
+        Parameters
+        ----------
+            parts : list
+                Contains the parameters
+            count : int
+                Limit of the validations
+        Return
+        ------
+            band : bool
+                true if it was successful
+                False if unsuccessful
+        """
+        # -1:command, 0:class, 1:id, 2:attribute, 3:value
+        size = len(parts)
+        band = True
+        if count > 0:
+            if size == 0:
+                print("** class name missing **")
+                band = False
+            elif parts[0] not in cls_dict.keys():
+                print("** class doesn't exist **")
+                band = False
+        if count > 1 and band:
+            if size == 1:
+                print("** instance id missing ** ")
+                band = False
+            elif (parts[0] + "." + parts[1]) not in list(storage.all().keys()):
+                print("** no instance found **")
+                band = False
+        if count > 2 and band and size == 2:
+            print("** attribute name missing **")
+            band = False
+        if count > 3 and band and size == 3:
+            print("** value missing **")
+            band = False
+        return band
 
 
 if __name__ == '__main__':
