@@ -33,6 +33,43 @@ cd AirBnb_clone
 ```python3
 ./console
 ```
+## Excecution
+ `Interactive Mode`
+ ```python3
+ $ ./console.py
+(hbnb) help
+
+Documented commands (type help <topic>):
+========================================
+EOF  help  quit
+
+(hbnb) 
+(hbnb) 
+(hbnb) quit
+$
+ ```
+`No Interactive Mode`
+```python3
+$ echo "help" | ./console.py
+(hbnb)
+
+Documented commands (type help <topic>):
+========================================
+EOF  help  quit
+(hbnb) 
+$
+$ cat test_help
+help
+$
+$ cat test_help | ./console.py
+(hbnb)
+
+Documented commands (type help <topic>):
+========================================
+EOF  help  quit
+(hbnb) 
+$
+```
 
 <h1 align="center">Classes</h1>
 <p align="center"><img src="https://raw.githubusercontent.com/Ineffable22/AirBnB_clone/main/classes.png" width="700"></p>
