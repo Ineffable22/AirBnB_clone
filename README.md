@@ -34,9 +34,7 @@ cd AirBnb_clone
 ./console
 ```
 
-
-
-<center><h1>Classes</h1></center>
+<h1 align="center">Classes</h1>
 <p align="center"><img src="https://raw.githubusercontent.com/Ineffable22/AirBnB_clone/main/classes.png" width="700"></p>
 
 <br>
