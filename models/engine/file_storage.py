@@ -76,4 +76,5 @@ class FileStorage:
                         value["__class__"]
                     ](**value)
         except Exception:
+            """ reload to Empty """
             self.__objects = {}
