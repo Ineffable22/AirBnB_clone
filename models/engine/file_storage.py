@@ -76,4 +76,4 @@ class FileStorage:
                         value["__class__"]
                     ](**value)
         except Exception:
-            pass
+            self.__objects = {}
