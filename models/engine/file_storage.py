@@ -75,6 +75,5 @@ class FileStorage:
                     self.__objects[key] = models.cls_dict[
                         value["__class__"]
                     ](**value)
-        except Exception:
-            """ reload to Empty """
-            self.__objects = {}
+        except FileNotFoundError:
+            pass
