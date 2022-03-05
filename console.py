@@ -123,11 +123,12 @@ class HBNBCommand(cmd.Cmd):
             if parts[1] == "update":
                 if re.search("[\\{\\}]", params):
                     parts[1] = "d" + parts[1]
-                    params = re.split(", ", params, 1)
+                    params = re.split("[,\\s?]", params, 1)
                 else:
-                    params = re.split(", ", params, 2)
-                if (parts[1] != "dupdate"):
+                    params = re.split("[,\\s?]", params, 2)
+                if (parts[1] != "dupdate"):  # some
                     params = list(map(lambda e: e.replace("\"", ""), params))
+                params[0] = params[0].replace("\"", "")  # everyone
                 params = " ".join(params)
             elif parts[1] != "all" and parts[1] != "count":
                 params = params.replace("\"", "")
@@ -143,24 +144,17 @@ class HBNBCommand(cmd.Cmd):
             (hbnb) <classname>.update("<id>", <dicttionary>)
         """
         parts = line.split(" ", 2)
-        cls_name = parts[0] if len(parts) > 0 else None
-        id = parts[1].replace("\"", "") if len(parts) > 1 else None
-        my_dict = ast.literal_eval(parts[2]) if len(parts) > 2 else None
-
-        if cls_name is None:
-            print("** class name missing **")
-        elif cls_name not in cls_dict.keys():
-            print("** class doesn't exist **")
-        elif id is None:
-            print("** instance id missing ** ")
-        elif (cls_name + "." + id) not in list(storage.all().keys()):
-            print("** no instance found **")
-        elif my_dict is None:
-            print("** attribute name missing **")
-        else:
-            for key, value in my_dict.items():
-                setattr(storage.all()[cls_name + "." + id], key, value)
-            storage.save()
+        if self.check_conditions(parts, 2):
+            my_dict = ast.literal_eval(parts[2])  # dict: Contains attributes
+            if not my_dict:
+                print("** Wrong dictionary fromat **")
+            else:
+                for key, value in my_dict.items():
+                    setattr(
+                        storage.all()[parts[0] + "." + parts[1]],
+                        key,
+                        value)
+                storage.save()
 
     def do_count(self, line):
         """\033[38;2;132;255;161m
