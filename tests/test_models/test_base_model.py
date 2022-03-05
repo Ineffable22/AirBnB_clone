@@ -1,9 +1,11 @@
 #!/usr/bin/python3
+""" TESTS """
 import unittest
 from models.base_model import BaseModel
 
-class TESTStringMethods(unittest.TestCase):
 
+class TESTStringMethods(unittest.TestCase):
+    """ TESTStringMethods Class """
     def test_upper(self):
         self.assertEqual('foo'.upper(), 'FOO')
 
@@ -18,7 +20,6 @@ class TESTStringMethods(unittest.TestCase):
         with self.assertRaises(TypeError):
             s.split(2)
 
-class Test_docstrings(unittest.)
-            
+
 if __name__ == '__main__':
     unittest.main()
