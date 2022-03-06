@@ -142,12 +142,12 @@ class HBNBCommand(cmd.Cmd):
             print(count)
 
     def do_EOF(self, line):
-        """\033[38;2;132;255;161mTerminates the running program\033[m"""
+        """\033[38;2;132;255;161mTerminates the running program\033[m\n"""
         print("")
         return True
 
     def do_quit(self, line):
-        """\033[38;2;132;255;161mQuit command to exit the program\033[m"""
+        """\033[38;2;132;255;161mQuit command to exit the program\033[m\n"""
         return True
 
     def emptyline(self):
