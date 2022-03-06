@@ -89,9 +89,9 @@ class HBNBCommand(cmd.Cmd):
             if parts[1] == "update":
                 if re.search("[\\{\\}]", params):
                     parts[1] = "d" + parts[1]
-                    params = re.split("[,\\s?]", params, 1)
+                    params = re.split(",\\s?", params, 1)
                 else:
-                    params = re.split("[,\\s?]", params, 2)
+                    params = re.split(",\\s?", params, 2)
                 if (parts[1] != "dupdate"):  # some
                     params = list(map(lambda e: e.replace("\"", ""), params))
                 params[0] = params[0].replace("\"", "")  # everyone
