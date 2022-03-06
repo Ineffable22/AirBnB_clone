@@ -16,3 +16,7 @@ class TestModules(unittest.TestCase):
         Method definition
         """
         self.assertEqual(5, 3)
+
+
+if __name__ == "__main__":
+    unittest.main()
