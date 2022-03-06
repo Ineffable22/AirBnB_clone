@@ -82,3 +82,15 @@ class Test_docstrings(unittest.TestCase):
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("AirBnB")
             self.assertEqual('*** Unknown syntax: AirBnB\n' or '', f.getvalue())
+
+     def test_empty_line(self):
+        """Testing empty input"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("\n")
+            self.assertEqual('', f.getvalue())
+
+    def test_quit(self):
+        """Testing quit"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("quit")
+            self.assertEqual('', f.getvalue())
