@@ -7,7 +7,23 @@
     FileStorage
 """
 import json
-import models
+from models.base_model import BaseModel
+from models.user import User
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
+
+cls_dict = {
+    "BaseModel": BaseModel,
+    "User": User,
+    "Place": Place,
+    "State": State,
+    "City": City,
+    "Amenity": Amenity,
+    "Review": Review
+}
 
 
 class FileStorage:
@@ -72,7 +88,7 @@ class FileStorage:
             with open(self.__file_path, "r") as file:
                 my_dict = json.load(file)
             for key, value in my_dict.items():
-                self.__objects[key] = models.cls_dict[
+                self.__objects[key] = cls_dict[
                     value["__class__"]
                 ](**value)
         except FileNotFoundError:
