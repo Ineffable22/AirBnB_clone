@@ -173,3 +173,39 @@ class Test_Help(unittest.TestCase):
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("help update")
             self.assertEqual(expected, f.getvalue())
+
+class CreateTest(unittest.TestCase):
+    """testing command test in console"""
+
+    @classmethod
+    def setUpClass(self):
+        """setting class up"""
+        self.console = HBNBCommand()
+
+    def test_create(self):
+        """testing creat input"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("create")
+            self.assertEqual("** class name missing **\n",
+                             f.getvalue())
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("create holbieees")
+            self.assertEqual("** class doesn't exist **\n",
+                             f.getvalue())
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("create BaseModel")
+            HBNBCommand().onecmd("create User")
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("all User")
+            self.assertEqual(
+                            '["[User', f.getvalue()[:7])
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("create BaseModel")
+        self.assertRegex(f.getvalue(), '^[0-9a-f]{8}-[0-9a-f]{4}-[1-5]'
+                                       '[0-9a-f]{3}-[89ab][0-9a-f]{3}-'
+                                       '[0-9a-f]{12}$')
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("create User")
+        self.assertRegex(f.getvalue(), '^[0-9a-f]{8}-[0-9a-f]{4}-[1-5]'
+                                       '[0-9a-f]{3}-[89ab][0-9a-f]{3}-'
+                                       '[0-9a-f]{12}$')
