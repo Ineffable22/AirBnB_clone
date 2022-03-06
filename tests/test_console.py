@@ -3,7 +3,6 @@
 Test Console
 """
 import pycodestyle
-# import pep8
 import unittest
 import inspect
 from unittest.mock import patch
@@ -58,3 +57,25 @@ class Test_docstrings(unittest.TestCase):
         """
         self.obj_members(HBNBCommand, inspect.isfunction)
         self.console = HBNBCommand()
+
+     def test_module_dostring(self):
+        """
+        Test for exist module docstrings
+        """
+        self.assertIsNotNone(console.__doc__,
+                             "console.py file needs a docstrings")
+        self.assertTrue(len(__doc__) > 0, "console.py have docstrings")
+        self.assertTrue(len(__doc__) > 0, " console don't have docstrings")
+        self.assertIsNotNone(HBNBCommand.do_show.__doc__)
+        self.assertIsNotNone(HBNBCommand.do_create.__doc__)
+        self.assertIsNotNone(HBNBCommand.do_destroy.__doc__)
+        self.assertIsNotNone(HBNBCommand.emptyline.__doc__)
+        self.assertIsNotNone(HBNBCommand.do_quit.__doc__)
+        self.assertIsNotNone(HBNBCommand.do_EOF.__doc__)
+        self.assertIsNotNone(HBNBCommand.do_all.__doc__)
+        self.assertIsNotNone(HBNBCommand.do_update.__doc__)
+        self.assertIsNotNone(HBNBCommand.do_help.__doc__)
+        self.assertIsNotNone(HBNBCommand.help_EOF.__doc__)
+        self.assertIsNotNone(HBNBCommand.help_quit.__doc__)
+
+        
