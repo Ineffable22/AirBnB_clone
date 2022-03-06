@@ -40,6 +40,7 @@ class HBNBCommand(cmd.Cmd):
         parts = line.split()
         if self.check_conditions(parts, 2):
             del storage.all()[parts[0] + "." + parts[1]]
+            storage.save()
 
     def do_update(self, line):
         """Updates an instance(add or set attribute)"""
