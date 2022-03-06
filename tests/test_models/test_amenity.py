@@ -3,6 +3,7 @@
 Class definition
 """
 from models.base_model import BaseModel
+from models.amenity import Amenity
 import unittest
 
 
