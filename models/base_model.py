@@ -5,8 +5,8 @@
         BaseModel
 """
 import uuid
-from datetime import datetime
 import models
+from datetime import datetime
 
 date_format = "%Y-%m-%dT%H:%M:%S.%f"
 
@@ -46,14 +46,14 @@ class BaseModel:
             kwargs: dict, optional
                 Contains key/values to add to the instance
         """
-        if len(kwargs) > 0:
+        self.id = str(uuid.uuid4())
+        if kwargs is not None and kwargs != {}:
             for key, value in kwargs.items():
-                if key in ["created_at", "updated_at"]:
-                    value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+                if key in ["created_at", "updated_at"] and type(value) is str:
+                    value = datetime.strptime(value, date_format)
                 if key != "__class__":
                     setattr(self, key, value)
         else:
-            self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = self.created_at
             models.storage.new(self)
@@ -73,9 +73,11 @@ class BaseModel:
                 Dictionary that contains key/values of the instance
         """
         rpr = self.__dict__.copy()
+        if "created_at" in list(rpr.keys()):
+            rpr['created_at'] = rpr['created_at'].strftime(date_format)
+        if "updated_at" in list(rpr.keys()):
+            rpr['updated_at'] = rpr['updated_at'].strftime(date_format)
         rpr['__class__'] = self.__class__.__name__
-        rpr['created_at'] = rpr['created_at'].strftime(date_format)
-        rpr['updated_at'] = rpr['updated_at'].strftime(date_format)
         return rpr
 
     def __str__(self):
@@ -86,6 +88,6 @@ class BaseModel:
             data : str
                 Information of the instance in string format
         """
-        data = "[{}] ({}) {}".format(
+        data = "[{:s}] ({:s}) {}".format(
             self.__class__.__name__, self.id, self.__dict__)
         return data
