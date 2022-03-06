@@ -21,9 +21,6 @@ class HBNBCommand(cmd.Cmd):
     Template for instances that inherit from the Cmd class in the cmd module,
     so you can run a console
     """
-    intro = ("\033[38;2;245;97;166m*" * 25) +\
-        "\n* Welcome {}\n".format(pwd.getpwuid(os.getuid()).pw_name) +\
-        ("*" * 25) + "\033[0m"
     prompt = "(hbnb) "
 
     def do_create(self, line):
@@ -176,22 +173,12 @@ class HBNBCommand(cmd.Cmd):
             print(count)
 
     def do_EOF(self, line):
-        """\033[38;2;132;255;161m
-        Terminates the running program
-
-        Usage:
-            (hbnb) 'ctrl + D'
-        """
+        """\033[38;2;132;255;161mTerminates the running program\033[m"""
         print("")
         return True
 
     def do_quit(self, line):
-        """\033[38;2;132;255;161m
-        Quit command to exit the program
-
-        Usage:
-            (hbnb) quit
-        """
+        """\033[38;2;132;255;161mQuit command to exit the program\033[m"""
         print("")
         return True
 
