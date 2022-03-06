@@ -63,17 +63,17 @@ class FileStorage:
         for key, value in dict_to_save.items():
             dict_to_save[key] = value.to_dict()
         with open(self.__file_path, "w") as file:
-            file.write(json.dumps(dict_to_save))
+            json.dump(dict_to_save, file)
 
     def reload(self):
-        """ load objects saved in a file
+        """ Load objects saved in a file
         """
         try:
             with open(self.__file_path, "r") as file:
-                self.__objects = json.loads(file.read())
-                for key, value in self.__objects.items():
-                    self.__objects[key] = models.cls_dict[
-                        value["__class__"]
-                    ](**value)
+                my_dict = json.load(file)
+            for key, value in my_dict.items():
+                self.__objects[key] = models.cls_dict[
+                    value["__class__"]
+                ](**value)
         except FileNotFoundError:
             pass
