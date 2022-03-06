@@ -8,8 +8,6 @@ Classes
 HBNBCommand
 """
 import cmd
-import os
-import pwd
 import ast  # For to use literal_eval method to convert from string to dict
 import re  # for to use regx
 from models import storage
@@ -24,12 +22,7 @@ class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
 
     def do_create(self, line):
-        """\033[38;2;132;255;161m
-        Creates a new instance of BaseModel and storage in JSON file
-
-        Usage:
-            (hbnb) create <classname> // stdout: id of the instance
-        """
+        """Creates a new instance of BaseModel and storage in JSON file"""
         parts = line.split()
         if self.check_conditions(parts, 1):
             obj = cls_dict[parts[0]]()
@@ -37,40 +30,19 @@ class HBNBCommand(cmd.Cmd):
             print(obj.id)
 
     def do_show(self, line):
-        """\033[38;2;132;255;161m
-        Prints the string representation of an instance
-        based on the class name and id
-
-        Usage:
-            (hbnb) show <classname> <id>
-            (hbnb) classname.show("<id>")
-        """
+        """Prints the string representation of an instance"""
         parts = line.split()
         if self.check_conditions(parts, 2):
             print(storage.all()[parts[0] + "." + parts[1]])
 
     def do_destroy(self, line):
-        """\033[38;2;132;255;161m
-        Deletes an instance based on the class name and id
-
-        Usage:
-            (hbnb) destroy <classname> <id>
-            (hbnb) <classname>.destroy("<id>")
-        """
+        """Deletes an instance based on the class name and id"""
         parts = line.split()
         if self.check_conditions(parts, 2):
             del storage.all()[parts[0] + "." + parts[1]]
 
     def do_update(self, line):
-        """\033[38;2;132;255;161m
-        Updates an instance based on the class name and id by adding
-        or updating attribute
-
-        Usage:
-            (hbnb) update <classname> <id> <attribute name> "<attribute value>"
-            (hbnb) <classname>.update("<id>", "<attribute>", <"value">)
-            (hbnb) <classname>.update("<id>", <dictionary>)
-        """
+        """Updates an instance(add or set attribute)"""
         parts = line.split()
         if self.check_conditions(parts, 4):
             setattr(
@@ -81,16 +53,7 @@ class HBNBCommand(cmd.Cmd):
             storage.save()
 
     def do_all(self, line):
-        """
-        \033[38;2;132;255;161m
-        Prints all string representation of all instances
-        based or not on the class name
-
-        Usage:
-            (hbnb) all
-            (hbnb) all <classname>
-            (hbnb) <classname>.all()
-        """
+        """Prints all string representation of all instances by classname"""
         parts = line.split()
         cls_name = parts[0] if len(parts) > 0 else None
         if cls_name is not None and cls_name not in cls_dict.keys():
