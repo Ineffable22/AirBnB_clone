@@ -23,8 +23,8 @@ class HBNBCommand(cmd.Cmd):
     """
     intro = ("\033[38;2;245;97;166m*" * 25) +\
         "\n* Welcome {}\n".format(pwd.getpwuid(os.getuid()).pw_name) +\
-        ("*" * 25)
-    prompt = "\033[38;2;255;56;92m(hbnb)\033[0m "
+        ("*" * 25) + "\033[0m"
+    prompt = "(hbnb) "
 
     def do_create(self, line):
         """\033[38;2;132;255;161m
@@ -194,16 +194,6 @@ class HBNBCommand(cmd.Cmd):
         """
         print("")
         return True
-
-    def do_help(self, arg):
-        """\033[38;2;132;255;161m
-        Help for commands
-
-        Usage:
-            (hbnb) help // List available commands
-            (hbnb) help <command> // Detailed help on the command(cmd)
-        """
-        cmd.Cmd.do_help(self, arg)
 
     def emptyline(self):
         """
