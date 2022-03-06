@@ -61,7 +61,7 @@ class HBNBCommand(cmd.Cmd):
         """Prints all string representation of all instances by classname"""
         parts = line.split()
         cls_name = parts[0] if len(parts) > 0 else None
-        if cls_name is not None and cls_name not in cls_dict.keys():
+        if cls_name is not None and cls_name not in list(cls_dict.keys()):
             print("** class doesn't exist **")
         else:
             if cls_name is None:
@@ -69,7 +69,7 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print([
                     str(elm) for elm in storage.all().values()
-                    if elm.__class__.__name__ == cls_name
+                    if type(elm).__name__ == cls_name
                 ])
 
     def precmd(self, line):
