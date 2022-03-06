@@ -180,7 +180,7 @@ class HBNBCommand(cmd.Cmd):
                 band = False
         if count > 1 and band:
             if size == 1:
-                print("** instance id missing ** ")
+                print("** instance id missing **")
                 band = False
             elif (parts[0] + "." + parts[1]) not in list(storage.all().keys()):
                 print("** no instance found **")
