@@ -48,7 +48,7 @@ class HBNBCommand(cmd.Cmd):
             setattr(
                 storage.all()[parts[0] + "." + parts[1]],  # object
                 parts[2],  # attribute
-                parts[3]  # value
+                parts[3].replace("\"", "")  # value
             )
             storage.save()
 
