@@ -94,3 +94,82 @@ class Test_docstrings(unittest.TestCase):
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("quit")
             self.assertEqual('', f.getvalue())
+
+class Test_Help(unittest.TestCase):
+    """Testing help command"""
+
+    @classmethod
+    def setup_class(self):
+        """setting class up"""
+        self.console = HBNBCommand()
+
+    def help_command(self):
+        """Testing an only help command"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("help")
+            output = '\nDocumented commands (type help <topic>[103 chars]\n\n)'
+            self.assertEqual(output, f.getvalue())
+
+    def help_help_command(self):
+        """Test comand help EOF"""
+        expected = 'End of File command: exit the program\n'
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("help EOF")
+            self.assertEqual(expected, f.getvalue())
+
+    def all_help_command(self):
+        """test commands: help all"""
+        expected = 'Prints all string representation of all instances \
+            based or not on the class name \
+            Ex: $ all BaseModel or $ all.\n'
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("help all")
+            self.assertEqual(expected, f.getvalue())
+
+    def create_help_command(self):
+        """test commands: help create"""
+        expected = 'Creates a new instance of BaseModel, saves it \n \
+            (to the JSON file) and prints the id\n'
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("help create")
+            self.assertEqual(expected, f.getvalue())
+
+    def quit_help_command(self):
+        """test commands: help quit"""
+        expected = 'Quit command to exit the program\n'
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("help quit")
+            self.assertEqual(expected, f.getvalue())
+
+    def destroy_help_command(self):
+        """test commands: help destroy"""
+        expected = 'Deletes an instance based on the class name and\n \
+        id (save the change into the JSON file).\n \
+        Ex: $ destroy BaseModel 1234-1234-1234\n'
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("help destroy")
+            self.assertEqual(expected, f.getvalue())
+
+    def show_help_command(self):
+        """test commands: help show"""
+        expected = 'Prints the string representation of an instance\n \
+            based on the class name and id.\n \
+            Ex: $ show BaseModel 1234-1234-1234.'
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("help show")
+            self.assertEqual(expected, f.getvalue())
+
+    def update_help_command(self):
+        """test commands: help update"""
+        expected = 'Updates an instance based on the class name and id\n \
+            by adding or updating attribute\n \
+            (save the change into the JSON file).\n \
+            - Usage:\n \
+            update <class name> <id> <attribute name> "<attribute value>"\n \
+            - Ex:\n \
+            $ update BaseModel 1234-1234-1234 email\
+                 "aibnb@holbertonschool.com"\n \
+            - Only one attribute can be updated at the time\n'
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("help update")
+            self.assertEqual(expected, f.getvalue())
