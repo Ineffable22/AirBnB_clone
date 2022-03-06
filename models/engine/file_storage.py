@@ -7,7 +7,6 @@
     FileStorage
 """
 import json
-import models
 from models.base_model import BaseModel
 from models.user import User
 from models.place import Place
@@ -89,7 +88,7 @@ class FileStorage:
             with open(self.__file_path, "r") as file:
                 self.__objects = json.loads(file.read())
                 for key, value in self.__objects.items():
-                    self.__objects[key] = models.cls_dict[
+                    self.__objects[key] = cls_dict[
                         value["__class__"]
                     ](**value)
         except Exception:
