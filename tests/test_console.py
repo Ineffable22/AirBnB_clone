@@ -78,4 +78,7 @@ class Test_docstrings(unittest.TestCase):
         self.assertIsNotNone(HBNBCommand.help_EOF.__doc__)
         self.assertIsNotNone(HBNBCommand.help_quit.__doc__)
 
-        
+     def test_invalid_command(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("AirBnB")
+            self.assertEqual('*** Unknown syntax: AirBnB\n' or '', f.getvalue())
