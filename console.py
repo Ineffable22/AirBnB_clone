@@ -43,7 +43,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, line):
         """Updates an instance(add or set attribute)"""
-        parts = line.split(" ", 3)
+        parts = line.split()
         if self.check_conditions(parts, 4):
             """
             if re.search("^\".*\\s?.*\"", parts[3]):
