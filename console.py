@@ -142,7 +142,6 @@ class HBNBCommand(cmd.Cmd):
 
     def do_quit(self, line):
         """\033[38;2;132;255;161mQuit command to exit the program\033[m"""
-        print("")
         return True
 
     def emptyline(self):
