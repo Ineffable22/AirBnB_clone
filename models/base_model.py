@@ -88,6 +88,6 @@ class BaseModel:
             data : str
                 Information of the instance in string format
         """
-        data = "[{:s}] ({:s}) {}".format(
+        data = "[{}] ({}) {}".format(
             self.__class__.__name__, self.id, self.__dict__)
         return data
