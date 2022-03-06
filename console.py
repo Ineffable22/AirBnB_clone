@@ -45,14 +45,17 @@ class HBNBCommand(cmd.Cmd):
         """Updates an instance(add or set attribute)"""
         parts = line.split(" ", 3)
         if self.check_conditions(parts, 4):
+            """
             if re.search("^\".*\\s?.*\"", parts[3]):
                 parts[3] = re.findall("^\".*\\s?.*\"", parts[3])[0]
+            """
+            obj = storage.all()[parts[0] + "." + parts[1]]
             setattr(
-                storage.all()[parts[0] + "." + parts[1]],  # object
+                obj,  # object
                 parts[2],  # attribute
                 parts[3].replace("\"", "")  # value
             )
-            storage.save()
+            obj.save()
 
     def do_all(self, line):
         """Prints all string representation of all instances by classname"""
