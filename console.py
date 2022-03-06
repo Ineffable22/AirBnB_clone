@@ -8,6 +8,8 @@ Classes
 HBNBCommand
 """
 import cmd
+import os
+import pwd
 import ast  # For to use literal_eval method to convert from string to dict
 import re  # for to use regx
 from models import storage
@@ -19,10 +21,18 @@ class HBNBCommand(cmd.Cmd):
     Template for instances that inherit from the Cmd class in the cmd module,
     so you can run a console
     """
-    prompt = "(hbnb) "
+    intro = ("\033[38;2;245;97;166m*" * 25) +\
+        "\n* Welcome {}\n".format(pwd.getpwuid(os.getuid()).pw_name) +\
+        ("*" * 25)
+    prompt = "\033[38;2;255;56;92m(hbnb)\033[0m "
 
     def do_create(self, line):
-        """Creates a new instance of BaseModel and storage in JSON file"""
+        """\033[38;2;132;255;161m
+        Creates a new instance of BaseModel and storage in JSON file
+
+        Usage:
+            (hbnb) create <classname> // stdout: id of the instance
+        """
         parts = line.split()
         if self.check_conditions(parts, 1):
             obj = cls_dict[parts[0]]()
@@ -30,20 +40,41 @@ class HBNBCommand(cmd.Cmd):
             print(obj.id)
 
     def do_show(self, line):
-        """Prints the string representation of an instance"""
+        """\033[38;2;132;255;161m
+        Prints the string representation of an instance
+        based on the class name and id
+
+        Usage:
+            (hbnb) show <classname> <id>
+            (hbnb) classname.show("<id>")
+        """
         parts = line.split()
         if self.check_conditions(parts, 2):
             print(storage.all()[parts[0] + "." + parts[1]])
 
     def do_destroy(self, line):
-        """Deletes an instance based on the class name and id"""
+        """\033[38;2;132;255;161m
+        Deletes an instance based on the class name and id
+
+        Usage:
+            (hbnb) destroy <classname> <id>
+            (hbnb) <classname>.destroy("<id>")
+        """
         parts = line.split()
         if self.check_conditions(parts, 2):
             del storage.all()[parts[0] + "." + parts[1]]
             storage.save()
 
     def do_update(self, line):
-        """Updates an instance(add or set attribute)"""
+        """\033[38;2;132;255;161m
+        Updates an instance based on the class name and id by adding
+        or updating attribute
+
+        Usage:
+            (hbnb) update <classname> <id> <attribute name> "<attribute value>"
+            (hbnb) <classname>.update("<id>", "<attribute>", <"value">)
+            (hbnb) <classname>.update("<id>", <dictionary>)
+        """
         parts = line.split()
         if self.check_conditions(parts, 4):
             """
@@ -59,7 +90,16 @@ class HBNBCommand(cmd.Cmd):
             obj.save()
 
     def do_all(self, line):
-        """Prints all string representation of all instances by classname"""
+        """
+        \033[38;2;132;255;161m
+        Prints all string representation of all instances
+        based or not on the class name
+
+        Usage:
+            (hbnb) all
+            (hbnb) all <classname>
+            (hbnb) <classname>.all()
+        """
         parts = line.split()
         cls_name = parts[0] if len(parts) > 0 else None
         if cls_name is not None and cls_name not in list(cls_dict.keys()):
@@ -140,6 +180,16 @@ class HBNBCommand(cmd.Cmd):
                 if value.__class__.__name__ == cls_name:
                     count += 1
             print(count)
+
+    def do_help(self, arg):
+        """\033[38;2;132;255;161m
+        Help for commands
+
+        Usage:
+            (hbnb) help // List available commands
+            (hbnb) help <command> // Detailed help on the command(cmd)
+        """
+        cmd.Cmd.do_help(self, arg)
 
     def do_EOF(self, line):
         """\033[38;2;132;255;161mTerminates the running program\033[m"""
