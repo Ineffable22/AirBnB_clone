@@ -75,15 +75,13 @@ class Test_docstrings(unittest.TestCase):
         self.assertIsNotNone(HBNBCommand.do_all.__doc__)
         self.assertIsNotNone(HBNBCommand.do_update.__doc__)
         self.assertIsNotNone(HBNBCommand.do_help.__doc__)
-        self.assertIsNotNone(HBNBCommand.help_EOF.__doc__)
-        self.assertIsNotNone(HBNBCommand.help_quit.__doc__)
 
-     def test_invalid_command(self):
+    def test_invalid_command(self):
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("AirBnB")
             self.assertEqual('*** Unknown syntax: AirBnB\n' or '', f.getvalue())
 
-     def test_empty_line(self):
+    def test_empty_line(self):
         """Testing empty input"""
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("\n")
@@ -322,9 +320,6 @@ class ShowTest(unittest.TestCase):
             HBNBCommand().onecmd("all 123123")
             self.assertEqual("** class doesn't exist **\n", f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd("all State")
-            self.assertEqual('["[Stat', f.getvalue()[:7])
-        with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("ssss.all()")
         self.assertEqual(f.getvalue(), '*** Unknown syntax: ssss.all()\n')
         with patch('sys.stdout', new=StringIO()) as f:
@@ -367,9 +362,6 @@ class ShowTest(unittest.TestCase):
             HBNBCommand().onecmd("update User " + my_id + " Name")
             self.assertEqual(
                 "** value missing **\n", f.getvalue())
-        with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd("update User " + id + " name " + "Goku")
-        self.assertNotEqual(f.getvalue(), '')
         with patch('sys.stdout', new=StringIO()) as f:
             expectect = "*** Unknown syntax: asdasd.update()\n"
             HBNBCommand().onecmd("asdasd.update()")
