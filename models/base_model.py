@@ -46,9 +46,9 @@ class BaseModel:
             kwargs: dict, optional
                 Contains key/values to add to the instance
         """
-        if kwargs is not None and kwargs != {}:
+        if len(kwargs) > 0:
             for key, value in kwargs.items():
-                if key in ["created_at", "updated_at"] and type(value) is str:
+                if key in ["created_at", "updated_at"]:
                     value = datetime.strptime(value, date_format)
                 if key != "__class__":
                     setattr(self, key, value)
@@ -74,8 +74,8 @@ class BaseModel:
         """
         rpr = self.__dict__.copy()
         rpr['__class__'] = self.__class__.__name__
-        rpr['created_at'] = rpr['created_at'].strftime(date_format)
-        rpr['updated_at'] = rpr['updated_at'].strftime(date_format)
+        rpr['created_at'] = rpr['created_at'].isoformat()
+        rpr['updated_at'] = rpr['updated_at'].isoformat()
         return rpr
 
     def __str__(self):
