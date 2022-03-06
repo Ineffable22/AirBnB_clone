@@ -182,7 +182,7 @@ class HBNBCommand(cmd.Cmd):
         Usage:
             (hbnb) 'ctrl + D'
         """
-        print()
+        print("")
         return True
 
     def do_quit(self, line):
@@ -190,8 +190,9 @@ class HBNBCommand(cmd.Cmd):
         Quit command to exit the program
 
         Usage:
-            (hbnb)$ quit
+            (hbnb) quit
         """
+        print("")
         return True
 
     def do_help(self, arg):
