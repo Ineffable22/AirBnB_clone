@@ -73,9 +73,9 @@ class BaseModel:
                 Dictionary that contains key/values of the instance
         """
         rpr = self.__dict__.copy()
-        if "created_at" in list(rpr.keys()):
+        if "created_at" in rpr:
             rpr['created_at'] = rpr['created_at'].strftime(date_format)
-        if "updated_at" in list(rpr.keys()):
+        if "updated_at" in rpr:
             rpr['updated_at'] = rpr['updated_at'].strftime(date_format)
         rpr['__class__'] = self.__class__.__name__
         return rpr
