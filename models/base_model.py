@@ -8,6 +8,8 @@ import uuid
 from datetime import datetime
 import models
 
+date_format = "%Y-%m-%dT%H:%M:%S.%f"
+
 
 class BaseModel:
     """ BaseModel Class definition.
@@ -72,8 +74,8 @@ class BaseModel:
         """
         rpr = self.__dict__.copy()
         rpr['__class__'] = self.__class__.__name__
-        rpr['created_at'] = rpr['created_at'].isoformat()
-        rpr['updated_at'] = rpr['updated_at'].isoformat()
+        rpr['created_at'] = rpr['created_at'].strftime(date_format)
+        rpr['updated_at'] = rpr['updated_at'].strftime(date_format)
         return rpr
 
     def __str__(self):
