@@ -44,9 +44,9 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, line):
         """Updates an instance(add or set attribute)"""
         parts = line.split(" ", 3)
-        if re.search("^\".*\\s?.*\"", parts[3]):
-            parts[3] = re.findall("^\".*\\s?.*\"", parts[3])[0]
         if self.check_conditions(parts, 4):
+            if re.search("^\".*\\s?.*\"", parts[3]):
+                parts[3] = re.findall("^\".*\\s?.*\"", parts[3])[0]
             setattr(
                 storage.all()[parts[0] + "." + parts[1]],  # object
                 parts[2],  # attribute
