@@ -70,8 +70,7 @@ class BaseModel:
             rpr : str
                 Dictionary that contains key/values of the instance
         """
-        rpr = self.__dict__.copy()
-        rpr['__class__'] = self.__class__.__name__
+        rpr = {**(self.__dict__), "__class__": type(self).__name__}
         rpr['created_at'] = rpr['created_at'].isoformat()
         rpr['updated_at'] = rpr['updated_at'].isoformat()
         return rpr
@@ -85,5 +84,5 @@ class BaseModel:
                 Information of the instance in string format
         """
         data = "[{}] ({}) {}".format(
-            self.__class__.__name__, self.id, self.__dict__)
+            type(self).__name__, self.id, self.__dict__)
         return data
