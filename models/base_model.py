@@ -5,10 +5,8 @@
         BaseModel
 """
 import uuid
-import models
 from datetime import datetime
-
-date_format = "%Y-%m-%dT%H:%M:%S.%f"
+import models
 
 
 class BaseModel:
@@ -49,7 +47,7 @@ class BaseModel:
         if len(kwargs) > 0:
             for key, value in kwargs.items():
                 if key in ["created_at", "updated_at"]:
-                    value = datetime.strptime(value, date_format)
+                    value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
                 if key != "__class__":
                     setattr(self, key, value)
         else:
