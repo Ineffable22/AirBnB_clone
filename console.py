@@ -22,7 +22,13 @@ class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
 
     def do_create(self, line):
-        """Creates a new instance of BaseModel and storage in JSON file"""
+        """
+        Creates a new instance of BaseModel and storage in JSON file
+        
+        Usage:
+            (hbnb) <classname>.create()
+            (hbnb) create <classname>
+        """
         parts = line.split()
         if self.check_conditions(parts, 1):
             obj = cls_dict[parts[0]]()
@@ -30,20 +36,39 @@ class HBNBCommand(cmd.Cmd):
             print(obj.id)
 
     def do_show(self, line):
-        """Prints the string representation of an instance"""
+        """
+        Prints the string representation of an instance
+        
+        Usage:
+            (hbnb) <classname>.show("id")
+            (hbnb) show <classname> id
+        """
         parts = line.split()
         if self.check_conditions(parts, 2):
             print(storage.all()[parts[0] + "." + parts[1]])
 
     def do_destroy(self, line):
-        """Deletes an instance based on the class name and id"""
+        """
+        Deletes an instance based on the class name and id
+        
+        Usage:
+            (hbnb) <classname>.destroy("id")
+            (hbnb) destroy <classname> id
+        """
         parts = line.split()
         if self.check_conditions(parts, 2):
             del storage.all()[parts[0] + "." + parts[1]]
             storage.save()
 
     def do_update(self, line):
-        """Updates an instance(add or set attribute)"""
+        """
+        Updates an instance(add or set attribute)
+        
+        Usage:
+            (hbnb) <classname>.update("id", "Attribute", "Value")
+            (hbnb) update <classname> id Attribute Value
+        """
+        
         parts = line.split()
         if self.check_conditions(parts, 4):
             """
@@ -59,7 +84,13 @@ class HBNBCommand(cmd.Cmd):
             obj.save()
 
     def do_all(self, line):
-        """Prints all string representation of all instances by classname"""
+        """
+        Prints all string representation of all instances by classname
+        
+        Usage:
+            (hbnb) <classname>.all()
+            (hbnb) all <classname>
+        """
         parts = line.split()
         cls_name = parts[0] if len(parts) > 0 else None
         if cls_name is not None and cls_name not in list(cls_dict.keys()):
@@ -197,6 +228,15 @@ class HBNBCommand(cmd.Cmd):
             print("** value missing **")
             band = False
         return band
+
+    def do_help(self, arg):
+        """\033[38;2;132;255;161m
+        Help for commands
+        Usage:
+            (hbnb) help // List available commands
+            (hbnb) help <command> // Detailed help on the command(cmd)
+        """
+        cmd.Cmd.do_help(self, arg)
 
 
 if __name__ == '__main__':
