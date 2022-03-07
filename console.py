@@ -22,13 +22,13 @@ class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
 
     def do_create(self, line):
-        """
+        """\033[38;2;132;255;161m
         Creates a new instance of BaseModel and storage in JSON file
         
         Usage:
             (hbnb) <classname>.create()
             (hbnb) create <classname>
-        """
+        \033[0m"""
         parts = line.split()
         if self.check_conditions(parts, 1):
             obj = cls_dict[parts[0]]()
@@ -36,38 +36,38 @@ class HBNBCommand(cmd.Cmd):
             print(obj.id)
 
     def do_show(self, line):
-        """
+        """\033[38;2;132;255;161m
         Prints the string representation of an instance
         
         Usage:
             (hbnb) <classname>.show("id")
             (hbnb) show <classname> id
-        """
+        \033[0m"""
         parts = line.split()
         if self.check_conditions(parts, 2):
             print(storage.all()[parts[0] + "." + parts[1]])
 
     def do_destroy(self, line):
-        """
+        """\033[38;2;132;255;161m
         Deletes an instance based on the class name and id
         
         Usage:
             (hbnb) <classname>.destroy("id")
             (hbnb) destroy <classname> id
-        """
+        \033[0m"""
         parts = line.split()
         if self.check_conditions(parts, 2):
             del storage.all()[parts[0] + "." + parts[1]]
             storage.save()
 
     def do_update(self, line):
-        """
+        """\033[38;2;132;255;161m
         Updates an instance(add or set attribute)
         
         Usage:
             (hbnb) <classname>.update("id", "Attribute", "Value")
             (hbnb) update <classname> id Attribute Value
-        """
+        \033[0m"""
         
         parts = line.split()
         if self.check_conditions(parts, 4):
@@ -84,13 +84,13 @@ class HBNBCommand(cmd.Cmd):
             obj.save()
 
     def do_all(self, line):
-        """
+        """\033[38;2;132;255;161m
         Prints all string representation of all instances by classname
         
         Usage:
             (hbnb) <classname>.all()
             (hbnb) all <classname>
-        """
+        \033[0m"""
         parts = line.split()
         cls_name = parts[0] if len(parts) > 0 else None
         if cls_name is not None and cls_name not in list(cls_dict.keys()):
@@ -105,7 +105,7 @@ class HBNBCommand(cmd.Cmd):
                 ])
 
     def precmd(self, line):
-        """
+        """\033[38;2;132;255;161m
         Format user input before executing the command, to direct them
         to already existing commands
 
@@ -113,7 +113,7 @@ class HBNBCommand(cmd.Cmd):
         ---------
             line : str
                 Input of the user from the console
-        """
+        \033[0m"""
         if re.search('^[A-Z].*\\..*\\(.*\\)$', line):
             parts = (re.split("[.()]", line))[:-1]
             params = parts[2]
@@ -139,7 +139,7 @@ class HBNBCommand(cmd.Cmd):
 
         Usage:
             (hbnb) <classname>.update("<id>", <dicttionary>)
-        """
+        \033[0m"""
         parts = line.split(" ", 2)
         if self.check_conditions(parts, 2):
             my_dict = ast.literal_eval(parts[2])  # dict: Contains attributes
@@ -160,7 +160,7 @@ class HBNBCommand(cmd.Cmd):
         Usage:
             (hbnb) <classname>.count()
             (hbnb) count <classname>
-        """
+        \033[0m"""
         parts = line.split()
         if (len(parts) != 1):
             cmd.Cmd.do_help(self, "count")
@@ -173,18 +173,22 @@ class HBNBCommand(cmd.Cmd):
             print(count)
 
     def do_EOF(self, line):
-        """\033[38;2;132;255;161mTerminates the running program\033[m"""
+        """\033[38;2;132;255;161m
+        Terminates the running program
+        \033[0m"""
         print("")
         return True
 
     def do_quit(self, line):
-        """\033[38;2;132;255;161mQuit command to exit the program\033[m"""
+        """\033[38;2;132;255;161m
+        Quit command to exit the program
+        \033[0m"""
         return True
 
     def emptyline(self):
-        """
+        """\033[38;2;132;255;161m
         Ignore empty lines
-        """
+        \033[0m"""
         pass
 
     def check_conditions(self, parts, count):
@@ -235,7 +239,7 @@ class HBNBCommand(cmd.Cmd):
         Usage:
             (hbnb) help // List available commands
             (hbnb) help <command> // Detailed help on the command(cmd)
-        """
+        \033[0m"""
         cmd.Cmd.do_help(self, arg)
 
 
