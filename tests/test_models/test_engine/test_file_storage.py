@@ -2,13 +2,11 @@
 """
 Unit tests for Base class
 """
-
-
 import unittest
-from models import storage
-# import pep8
+
 import pycodestyle
 import models
+from models import storage
 from models.base_model import BaseModel
 from models.engine import file_storage
 from models.amenity import Amenity
@@ -77,8 +75,8 @@ class Test_docstrings_filestorage(unittest.TestCase):
         """Test new method
         """
         object = BaseModel()
-        storage.new(object)
-        dict_objects = storage.all()
+        models.storage.new(object)
+        dict_objects = models.storage.all()
 
         # Testing if key was set correctly and in __objects
         key = f"{object.__class__.__name__}.{object.id}"
@@ -128,7 +126,12 @@ class Test_docstrings_filestorage(unittest.TestCase):
 
     def testing_save(self):
         """Testing serializes method"""
-        os.remove("file.json")
+        path = os.getcwd()
+        file_name_expected = 'file.json'
+        try:
+            os.remove(path + "/" + file_name_expected)
+        except FileNotFoundError:
+            pass
         storage = FileStorage()
         new_dict = {}
         for key, value in classes.items():
