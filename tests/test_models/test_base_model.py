@@ -55,8 +55,8 @@ class Test_Class_BaseModel(unittest.TestCase):
         self.assertEqual(type(instance), BaseModel)
         self.assertTrue(type(instance) == BaseModel)
         self.assertIs(type(instance), BaseModel)
-        instance.name = "Monkey"
-        instance.email = "luffy@outlook.com"
+        instance.name = "Ineffable"
+        instance.email = "Ineffable@ubuntu.com"
         instance.number = 300
         expectec_attrs_types = {
             "id": str,
@@ -76,9 +76,9 @@ class Test_Class_BaseModel(unittest.TestCase):
                 "number",
                 "__class__"]
         self.assertCountEqual(dict_inst.keys(), expectec_attrs)
-        self.assertEqual(dict_inst['name'], 'MonkeyDLuffy')
-        self.assertEqual(dict_inst['email'], 'luffy@outlook.com')
-        self.assertEqual(dict_inst['number'], 981)
+        self.assertEqual(dict_inst['name'], 'Ineffable')
+        self.assertEqual(dict_inst['email'], 'Ineffable@ubuntu.com')
+        self.assertEqual(dict_inst['number'], 300)
         self.assertEqual(dict_inst['__class__'], 'BaseModel')
 
         for attr, types in expectec_attrs_types.items():
@@ -86,9 +86,9 @@ class Test_Class_BaseModel(unittest.TestCase):
                 self.assertIn(attr, instance.__dict__)
                 self.assertIs(type(instance.__dict__[attr]), types)
         self.assertTrue(mock_storage.new.called)
-        self.assertEqual(instance.name, "MonkeyDLuffy")
-        self.assertEqual(instance.email, "luffy@outlook.com")
-        self.assertEqual(instance.number, 981)
+        self.assertEqual(instance.name, "Ineffable")
+        self.assertEqual(instance.email, "Ineffable@ubuntu.com")
+        self.assertEqual(instance.number, 300)
 
     def test_datetime(self):
         """
